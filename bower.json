@@ -1,0 +1,19 @@
+{
+  "name":"hackaton",
+  "authors": [
+    "Davyd23 <daviddedu02@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies":{
+    "angular":"1.6.4",
+    "angular-route": "1.6.4"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/webapp",
+    "test",
+    "tests"
+  ]
+}
