@@ -1,5 +1,9 @@
 package hackaton.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 /**
@@ -8,6 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="posting")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Posting {
 
     @Id
@@ -19,6 +24,7 @@ public class Posting {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_recruter")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Administrator administrator;
 
     @Column(name="title")

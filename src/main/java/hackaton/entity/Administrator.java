@@ -1,5 +1,10 @@
 package hackaton.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name="administrator")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Administrator {
 
     @Id
@@ -35,6 +41,7 @@ public class Administrator {
     private String sex;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "administrator")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Posting> postings;
 
     public long getId() {
