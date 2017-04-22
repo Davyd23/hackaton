@@ -30,6 +30,10 @@ public class Posting {
     @Column(name="title")
     private String title;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_nivel_studii")
+    private Studies studies;
+
     public long getId() {
         return id;
     }
@@ -62,6 +66,11 @@ public class Posting {
         this.title = title;
     }
 
-    // private
+    public Studies getStudies() {
+        return studies;
+    }
 
+    public void setStudies(Studies studies) {
+        this.studies = studies;
+    }
 }

@@ -33,6 +33,10 @@ public class Candidate {
     @Column (name="telefon")
     private String phone;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_nivel_invatamant")
+    private Studies studies;
+
    /* @OneToMany(fetch = FetchType.LAZY, mappedBy = "candidate")
     private List<Jobs> jobs;*/
 
@@ -121,4 +125,12 @@ public class Candidate {
     public void setSkills(List<Skills> skills) {
         this.skills = skills;
     }*/
+
+    public Studies getStudies() {
+        return studies;
+    }
+
+    public void setStudies(Studies studies) {
+        this.studies = studies;
+    }
 }
