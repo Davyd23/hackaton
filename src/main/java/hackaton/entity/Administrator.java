@@ -32,7 +32,7 @@ public class Administrator {
     private String password;
 
     @Column (name="sex")
-    private char sex;
+    private String sex;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "administrator")
     private List<Posting> postings;
@@ -85,15 +85,15 @@ public class Administrator {
         this.password = password;
     }
 
-    public char getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(char sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
-    public List<Posting> getPostings() {
+      public List<Posting> getPostings() {
         return postings;
     }
 
