@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Marian on 4/22/2017.
@@ -33,6 +34,10 @@ public class Posting {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_nivel_studii")
     private Studies studies;
+
+    @OneToMany(  fetch = FetchType.LAZY, mappedBy = "posting")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<PostingSkills> postingSkills;
 
     public long getId() {
         return id;

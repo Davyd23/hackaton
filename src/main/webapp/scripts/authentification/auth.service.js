@@ -15,12 +15,14 @@ app.service( 'AuthService', function($http) {
 
         },
         isLoggedIn: function() {
-            if(currentUser !== null){
-                return true;
+            if(currentUser!= undefined || currentUser !== null){
+                return false;
             }
-            return false;
+            return true;
         },
-        currentUser: function() { return currentUser; }
+        currentUser: function() {
+            return currentUser;
+        }
 
     };
 });

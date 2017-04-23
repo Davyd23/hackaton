@@ -1,5 +1,7 @@
 package hackaton.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 /**
@@ -22,6 +24,7 @@ public class PostingSkills {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_posting")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Posting posting;
 
     public long getId() {

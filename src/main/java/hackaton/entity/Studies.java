@@ -28,7 +28,7 @@ public class Studies {
     private Date stopDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "candidat")
+    @JoinColumn(name = "nivel_invatamant")
     private Candidate candidate;
 
     public long getId() {

@@ -1,14 +1,15 @@
 package hackaton.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by Marian on 4/22/2017.
- */
-
 @Entity
-@Table(name="candidate2")
+@Table(name="candidate")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Candidate {
 
     @Id
@@ -27,24 +28,20 @@ public class Candidate {
     @Column (name="password")
     private String password;
 
-/*    @Column (name="sex")
-    private char sex;*/
-
     @Column (name="telefon")
     private String phone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "fk_nivel_invatamant")
-    private Studies studies;
+    private DoneStudies studies;
 
-   /* @OneToMany(fetch = FetchType.LAZY, mappedBy = "candidate")
-    private List<Jobs> jobs;*/
+    @OneToMany(  fetch = FetchType.LAZY, mappedBy = "candidate")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    List<Jobs> jobsList;
 
-/*    @OneToMany(fetch = FetchType.LAZY, mappedBy = "candidate")
-    private List<Studies> studies;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "candidate")
-    private List<Skills> skills;*/
+    @OneToMany(  fetch = FetchType.LAZY, mappedBy = "candidate")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    List<Skills> skillsList;
 
     public long getId() {
         return id;
@@ -86,14 +83,6 @@ public class Candidate {
         this.password = password;
     }
 
-    /*public char getSex() {
-        return sex;
-    }
-
-    public void setSex(char sex) {
-        this.sex = sex;
-    }*/
-
     public String getPhone() {
         return phone;
     }
@@ -102,35 +91,27 @@ public class Candidate {
         this.phone = phone;
     }
 
- /*   public List<Jobs> getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(List<Jobs> jobs) {
-        this.jobs = jobs;
-    }*/
-
-/*    public List<Studies> getStudies() {
+    public DoneStudies getStudies() {
         return studies;
     }
 
-    public void setStudies(List<Studies> studies) {
+    public void setStudies(DoneStudies studies) {
         this.studies = studies;
     }
 
-    public List<Skills> getSkills() {
-        return skills;
+    public List<Jobs> getJobsList() {
+        return jobsList;
     }
 
-    public void setSkills(List<Skills> skills) {
-        this.skills = skills;
-    }*/
-
-    public Studies getStudies() {
-        return studies;
+    public void setJobsList(List<Jobs> jobsList) {
+        this.jobsList = jobsList;
     }
 
-    public void setStudies(Studies studies) {
-        this.studies = studies;
+    public List<Skills> getSkillsList() {
+        return skillsList;
+    }
+
+    public void setSkillsList(List<Skills> skillsList) {
+        this.skillsList = skillsList;
     }
 }
