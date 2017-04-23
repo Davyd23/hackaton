@@ -1,14 +1,19 @@
-app.controller('RegisterController', function($scope, $uibModalStack){
+app.controller('RegisterController', function($scope, $uibModalStack, $hhtp){
     $scope.candidate = {};
-    /*var modalInstance = $uibModal.open({
-     templateUrl: 'scripts/main/jobView.html',
-     // controller: 'ModalInstanceCtrl',
-     // size: size
-     });*/
-    // $dismiss('test');
 
+    $scope.saveUser = function(){
+        http.post("/hackaton/user/save", credentials).then(function(response){
+            console.log(response);
+        }, function(err){
+            console.log(err);
+        })
+    }
 
-    $scope.close = function(){
-        $uibModalStack.dismissAll();
+    $scope.cancel = function(){
+        var top = $uibModalStack.getTop();
+        if (top) {
+            $uibModalStack.dismiss(top.key);
+        }
+
     }
 });

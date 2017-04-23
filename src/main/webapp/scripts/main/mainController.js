@@ -7,7 +7,7 @@ app.controller('MainController', function($scope, PostingService, $uibModal){
 
     var modalInstance = $uibModal.open({
         templateUrl: 'scripts/register/registerView.html',
-        controller: 'RegisterController',
+        controller: 'LogisticController',
         // size: size
     });
 });

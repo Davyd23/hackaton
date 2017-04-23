@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h2>Recruiter registration</h2></div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email" ng-model="credentials.email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" ng-model="credentials.password">
+            <span style="color:red" ng-if="credentials.password!==undefined && repeatPassword!==undefined &&repeatPassword!==credentials.password">Nigga, you wrote your password wrong</span>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPasswordRepeat">Repeat Password</label>
+            <input type="password" class="form-control" id="exampleInputPasswordRepeat" placeholder="Password" ng-model="repeatPassword">
+            <span style="color:red" ng-if="credentials.password!==undefined && repeatPassword!==undefined &&repeatPassword!==credentials.password">Nigga, you wrote your password wrong</span>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="saveUser()">Submit</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+</div>

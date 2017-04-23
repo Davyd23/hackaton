@@ -1,4 +1,4 @@
-<form role="form" ng-submit="login()">
+<!--<form role="form" ng-submit="login()">
     <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" class="form-control" id="username" name="username" ng-model="credentials.email"/>
@@ -8,4 +8,23 @@
         <input type="password" class="form-control" id="password" name="password" ng-model="credentials.password"/>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</form>-->
+<div class="modal modal-header">Login as {{loginType}}</div>
+<div class="modal modal-body">
+    <h2 ng-if="!loggedUser">Credentials are incorrect</h2>
+    <form role="form" ng-submit="login()">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" ng-model="credentials.email"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" ng-model="credentials.password"/>
+        </div>
+
+    </form>
+</div>
+<div class="modal modal-footer">
+    <button  class="btn btn-primary" ng-click="login()">Submit</button>
+    <button  class="btn btn-default" ng-click="cancel()">Cancel</button>
+</div>
