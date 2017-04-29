@@ -6,7 +6,8 @@
   "license": "MIT",
   "dependencies":{
     "angular":"1.6.4",
-    "angular-route": "1.6.4"
+    "angular-route": "1.6.4",
+    "bootstrap": "3.3.7"
   },
   "ignore": [
     "**/.*",
