@@ -1,19 +1,33 @@
 'use strict';
-app.controller('LoginController', function($scope, $http){
+app.controller('LoginController', function($scope, $http, $cookies){
     $scope.credentials = {};
     $scope.error = false;
 
     var authenticate = function(credentials) {
-
-        var headers = credentials ? {authorization : "Basic "
-        + btoa(credentials.username + ":" + credentials.password)
-        } : {};
-
-       /* $http.post("/login",$scope.credentials).then(function(response){
+        $http({
+            method: 'POST',
+            url: "/login",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data: credentials
+        }).then(function(response){
             console.log(response);
         },function(err){
             console.log(err);
-        })*/
+        });
+        /*
+         *when there is no form login
+         */
+        /*
+         var headers = credentials ? {authorization : "Basic "
+         + btoa(credentials.username + ":" + credentials.password)
+         } : {};
+
         $http.get('user', {headers : headers}).then(function(response) {
             console.log(response);
             if (response.data.name) {
@@ -28,16 +42,17 @@ app.controller('LoginController', function($scope, $http){
             $rootScope.authenticated = false;
             $scope.error = true;
 
-        });
+        });*/
 
     }
-
     // authenticate();
+
     $scope.login = function(){
        /* if($scope.credentials.email!== "" && $scope.credentials.email !==null && $scope.credentials.email!== undefined &&
             $scope.credentials.password!== "" && $scope.credentials.password !==null && $scope.credentials.password!== undefined){*/
 
-            authenticate($scope.credentials );
+        console.log($cookies);
+        authenticate($scope.credentials );
         /*}else{
             $scope.error = true;
         }*/

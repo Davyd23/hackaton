@@ -1,14 +1,14 @@
 <div class="alert alert-danger" ng-show="error" >
     The e-mail and password combination is incorrect.
 </div>
-<form>
+<form >
     <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="credentials.username">
+        <input name="username" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="credentials.username">
     </div>
     <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="credentials.password">
+        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="credentials.password">
     </div>
     <button type="submit" class="btn btn-default" ng-click="login()">Submit</button>
 </form>

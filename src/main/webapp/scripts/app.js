@@ -1,4 +1,4 @@
-var app = angular.module("hackatonApp",["ngRoute"]);
+var app = angular.module("hackatonApp",["ngRoute", "ngCookies"]);
 
 // register the interceptor as a service
 app.factory('myHttpInterceptor', function($q, $location) {
@@ -24,7 +24,32 @@ app.factory('myHttpInterceptor', function($q, $location) {
         }
     };
 });
+app.provider('myCSRF',[function(){
+    var headerName = 'X-CSRFToken';
+    var cookieName = 'csrftoken';
+    var allowedMethods = ['GET'];
 
+    this.setHeaderName = function(n) {
+        headerName = n;
+    }
+    this.setCookieName = function(n) {
+        cookieName = n;
+    }
+    this.setAllowedMethods = function(n) {
+        allowedMethods = n;
+    }
+    this.$get = ['$cookies', function($cookies){
+        return {
+            'request': function(config) {
+                if(allowedMethods.indexOf(config.method) === -1) {
+                    // do something on success
+                    config.headers[headerName] = $cookies[cookieName];
+                }
+                return config;
+            }
+        }
+    }];
+}]);
 
 
 app.config(function($routeProvider, $httpProvider) {
@@ -42,8 +67,16 @@ app.config(function($routeProvider, $httpProvider) {
           controller : "MainController",
           templateUrl : "scripts/main/main.html"
        });
-    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
+    $httpProvider.defaults.withCredentials = true;
+    // $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
 
     $httpProvider.interceptors.push('myHttpInterceptor');
+    $httpProvider.interceptors.push('myCSRF');
 });
 
+app.run(['$http', '$cookies', function($http, $cookies) {
+        $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+    }]
+);

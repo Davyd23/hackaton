@@ -39,18 +39,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic()
                     .and()
+                /*.headers()
+                    .disable()
+                    .csrf()
+                    .disable()*/
                 .authorizeRequests()
                     .antMatchers("/index.html", "/", "/scripts/**", "/bower_components/**", "/login").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                /*.formLogin()
-                    .loginPage("/login")
-                    .usernameParameter("username")
-                    .passwordParameter("password")
+                .formLogin()
+                    .loginProcessingUrl("/login")
                     .permitAll()
-                    .and()*/
-                .csrf()
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                ;
     }
 
     @Bean
