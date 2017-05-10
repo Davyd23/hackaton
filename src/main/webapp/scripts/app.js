@@ -61,6 +61,9 @@ app.config(function($routeProvider, $httpProvider) {
        .when('/login', {
           templateUrl : 'scripts/login/login.html',
           controller : 'LoginController'
+       }).when('/register', {
+          templateUrl : 'scripts/register/register.html',
+          controller : 'RegisterController'
        })
        .otherwise({
           redirectTo:'/',

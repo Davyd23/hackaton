@@ -1,0 +1,58 @@
+<div class="alert alert-danger" ng-show="emailExists" >
+    A user is already registered with the current e-mail address.
+</div>
+<form name="registerForm" novalidate>
+    <div class="form-group">
+        <label for="nume">First Name</label>
+        <input type="text" class="form-control" id="nume" placeholder="Name" ng-model="registeringUser.nume" required>
+        <span class="text-danger" ng-if="!isFieldValid(registeringUser.nume)">
+            This field is required
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="prenume">Last Name</label>
+        <input  type="text" class="form-control" id="prenume" placeholder="Given name" ng-model="registeringUser.prenume" required>
+        <span class="text-danger" ng-if="!isFieldValid(registeringUser.prenume)">
+            This field is required
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <input name="username" type="email" class="form-control" id="email" placeholder="Email" ng-model="registeringUser.email" required>
+        <span class="text-danger" ng-if="!isFieldValid(registeringUser.email)">
+            This field is required. The it requires a valid e-mail address.
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input name="password" type="password" class="form-control" id="password" placeholder="Password" ng-model="registeringUser.password" required>
+        <span class="text-danger" ng-if="!isFieldValid(registeringUser.password)">
+            This field is required.
+        </span>
+        <span class="text-danger" ng-if="registeringUser.rePassword !== registeringUser.password">
+        The password does not match.
+    </span>
+    </div>
+    <div class="form-group">
+        <label for="rePassword">Retype password</label>
+        <input name="password" type="password" class="form-control" id="rePassword" placeholder="Password" ng-model="registeringUser.rePassword" required>
+        <span class="text-danger" ng-if="!isFieldValid(registeringUser.rePassword)">
+            This field is required.
+        </span>
+        <span class="text-danger" ng-if="registeringUser.rePassword !== registeringUser.password">
+        The password does not match.
+    </span>
+    </div>
+    <div class="form-group">
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox1" ng-model="registeringUser.candidate"> Candidate
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckbox2" ng-model="registeringUser.recruiter"> Recruiter
+        </label>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-default" ng-click="register(registerForm)">Register</button>
+</form>

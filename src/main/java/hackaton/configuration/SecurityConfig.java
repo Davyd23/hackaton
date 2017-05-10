@@ -39,12 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic()
                     .and()
-                /*.headers()
+                .headers()
                     .disable()
                     .csrf()
-                    .disable()*/
+                    .disable()
                 .authorizeRequests()
-                    .antMatchers("/index.html", "/", "/scripts/**", "/bower_components/**", "/login").permitAll()
+                    .antMatchers("/index.html", "/", "/scripts/**", "/bower_components/**", "/login", "/app/register").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
