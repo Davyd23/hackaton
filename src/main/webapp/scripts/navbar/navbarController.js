@@ -1,3 +1,4 @@
-app.controller('NavbarController', function($scope){
-    $scope.aa ='aaaa'
+app.controller('NavbarController', function($scope, Principal){
+
+    Principal.checkCredentials();
 });

@@ -16,7 +16,11 @@ app.factory('myHttpInterceptor', function($q, $location) {
         // optional method
         'responseError': function(rejection) {
             if(rejection.status === 401){
-                $location.path("/login");
+                if($location.url()!=='/login') { // in caz ca login-ul a esuat
+                    $location.url("/login");
+                }else{
+                    return rejection;
+                }
             }else {
                 return $q.reject(rejection);
             }

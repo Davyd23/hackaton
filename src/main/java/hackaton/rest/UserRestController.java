@@ -23,9 +23,11 @@ public class UserRestController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping("/user")
+    @RequestMapping(value = "/user",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
     public Principal user(Principal user) {
-        return user;
+       return user;
     }
 
     @RequestMapping(value = "/app/register",
