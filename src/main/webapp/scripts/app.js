@@ -58,21 +58,28 @@ app.provider('myCSRF',[function(){
 
 app.config(function($routeProvider, $httpProvider) {
    $routeProvider
-       /*.when('/test', {
+       .when('/', {
           templateUrl : 'scripts/main/main.html',
-          controller : 'MainController'
-       })*/
+          controller : 'MainController',
+          withLogin : false
+       })
        .when('/login', {
           templateUrl : 'scripts/login/login.html',
-          controller : 'LoginController'
-       }).when('/register', {
+          controller : 'LoginController',
+           withLogin : false
+       })
+       .when('/register', {
           templateUrl : 'scripts/register/register.html',
-          controller : 'RegisterController'
+          controller : 'RegisterController',
+          withLogin : false
+       })
+       .when('/profile', {
+          templateUrl : 'scripts/profile/profile.html',
+          controller : 'ProfileController',
+          withLogin : true
        })
        .otherwise({
-          redirectTo:'/',
-          controller : "MainController",
-          templateUrl : "scripts/main/main.html"
+          redirectTo:'/'
        });
 
     $httpProvider.defaults.withCredentials = true;
@@ -83,7 +90,19 @@ app.config(function($routeProvider, $httpProvider) {
     $httpProvider.interceptors.push('myCSRF');
 });
 
-app.run(['$http', '$cookies', function($http, $cookies) {
-        $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+app.run(['$http', '$cookies', 'Principal', '$rootScope', '$location', function($http, $cookies, Principal, $rootScope, $location) {
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+
+    $rootScope.$on('$routeChangeStart', function(event, current) {//TODO trebuie facuta o pagina de eroare si de implementat cu grad de acess
+        // $rootScope.pageTitle = current.$$route.title;
+        if ( current.$$route && current.$$route.withLogin ) { //current.$$route pt cazul in care e pus otherwise si nu exista when pe calea respectiva
+            if(!Principal.isLogged() ){
+                event.preventDefault();
+                $location.path('/login');
+            }
+        }
+
+        //if(current.$$route.withLogin)
+    });
     }]
 );

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,6 +29,7 @@ import java.io.IOException;
 
 @EnableWebSecurity
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -52,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .csrf()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers("/index.html", "/", "/scripts/**", "/bower_components/**", "/login", "/app/register","/user").permitAll()
+                    .antMatchers("/index.html", "/", "/scripts/**", "/bower_components/**", "/login", "/user" ,"/user/register").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

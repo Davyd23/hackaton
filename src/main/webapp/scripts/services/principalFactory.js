@@ -20,11 +20,12 @@ app.factory('Principal', function( $http){
             });
         },
         checkCredentials : function() {
-            $http.get('user').then(function(response){
+            return $http.get('user').then(function(response){
                 if(response.data !== '' ){ // user-ul e logat
                     principal = response.data.principal;
                 }
-            })
+                return response;
+            });
         },
         logout : function(){
             $http.get("/logout").then(function(response){
@@ -33,7 +34,7 @@ app.factory('Principal', function( $http){
             principal = {};
         },
         isLogged : function(){
-            if(principal.username !== null && principal.username!== undefined){
+            if(principal && principal.username !== null && principal.username!== undefined){
                 return true;
             }
             return false;
@@ -43,6 +44,9 @@ app.factory('Principal', function( $http){
                 return principal.authorities;
             }
             return null;
+        },
+        getPrincipal : function(){
+            return principal;
         }
 
     }

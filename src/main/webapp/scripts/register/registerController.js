@@ -1,7 +1,11 @@
-app.controller('RegisterController', function($scope, UserService, $location){
+app.controller('RegisterController', function($scope, UserService, $location, Principal){
     $scope.registeringUser = {};
     $scope.invalidForm = false;
     $scope.emailExists = false;
+
+    if(Principal.isLogged()){
+        $location.url("/");
+    }
 
     $scope.register = function(form){
 
@@ -9,7 +13,7 @@ app.controller('RegisterController', function($scope, UserService, $location){
             UserService.register($scope.registeringUser).then(function(response){
                 console.log(response);
                 if(response.status === 200){
-                    $location.url("/login");
+                    $scope.login();
                 }else{
                     $scope.emailExists = true;
                 }
@@ -30,4 +34,16 @@ app.controller('RegisterController', function($scope, UserService, $location){
         return true;
     }
 
+    $scope.login = function(){ // trebuie implementat server de e-mail pentru confirmare pe mail
+        Principal.auth({
+            username : $scope.registeringUser.email,
+            password : $scope.registeringUser.password
+        }).then(function(response){
+            if(response.status === 200 ){
+                Principal.checkCredentials().then(function(response){
+                    $location.url("/profile");
+                });
+            }
+        });
+    }
 });
