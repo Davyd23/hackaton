@@ -62,7 +62,8 @@
                 <span class="span4">
                     How much work experience do you have?
                     <select ng-model="profile.workExperience">
-                        <option ng-repeat="workExperience in workExperienceOptions track by $index" value="{{workExperience}}">{{workExperience}}</option>
+                        <option ng-selected="checkWorkExperienceSelected(workExperience)" ng-repeat="workExperience in workExperienceOptions track by $index"
+                                value="{{workExperience}}">{{workExperience}}</option>
                     </select>
                     years.
                 </span>

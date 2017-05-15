@@ -1,10 +1,21 @@
 package hackaton.dto;
 
+import hackaton.entity.Profile;
+
 public class ProfileDTO {
     private boolean creative, overtimeWork, analitical, multitasking, teamwork;
     private String workExperience;
 
     public ProfileDTO() {}
+
+    public ProfileDTO(Profile profile) {
+        this.creative = profile.isCreative();
+        this.overtimeWork = profile.isOvertimeWork();
+        this.analitical = profile.isAnalitical();
+        this.multitasking = profile.isMultitasking();
+        this.teamwork = profile.isTeamwork();
+        this.workExperience = profile.getWorkExperience();
+    }
 
     public boolean isCreative() {
         return creative;

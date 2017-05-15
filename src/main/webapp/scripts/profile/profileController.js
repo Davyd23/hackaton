@@ -18,4 +18,8 @@ app.controller('ProfileController', function($scope, UserService, Principal){
             $scope.profile = response.data;
        }
     });
+
+    $scope.checkWorkExperienceSelected = function(workExperience){
+        return $scope.profile.workExperience && $scope.profile.workExperience.indexOf(workExperience) === 0;
+    };
 });

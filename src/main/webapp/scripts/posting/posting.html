@@ -1,0 +1,90 @@
+<div class="container">
+    <button class="btn btn-default" ng-click="openPosting('new')" >Create new</button>
+    <button class="btn btn-default" ng-click="openPosting('edit')" ng-disabled="checkOnlyOnePostingSelected()">Edit posting</button>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Selected
+                </th>
+                <th>
+                    Title
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat = "posting in postings track by posting.uuid">
+                <td>
+                    <input type="checkbox" ng-click="addOrRemovePosting($index)">
+                </td>
+                <td>
+                    <span ng-bind="posting.title"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+    <br>
+    <div ng-if="displayForm">
+        <span class="h2">Posting</span>
+        <form novalidate>
+        <div class="form-group">
+            <label for="postingTitle">
+                Title
+            </label>
+            <input type="text" class="form-control" id="postingTitle" placeholder="Title" ng-model="posting.title">
+        </div>
+        <div class="form-group">
+            <label for="postingCompany">
+                Company
+            </label>
+            <input type="text" class="form-control" id="postingCompany" placeholder="Company" ng-model="posting.companyName">
+        </div>
+        <div class="form-group">
+            <label for="postingDescription">
+                Description
+            </label>
+            <textarea class="form-control" id="postingDescription" placeholder="Description" ng-model="posting.description" ></textarea>
+        </div>
+        <div class="h2">Ideal candidate profile</div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="posting.profile.creative"> Creative
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="posting.profile.overtimeWork"> Works overtime
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="posting.profile.analitical"> Analitical
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="posting.profile.multitasking"> Multitasker
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="posting.profile.teamwork"> Team worker
+            </label>
+        </div>
+        <div class="form-group">
+            <span >
+                Experience
+            </span>
+            <select ng-model="posting.profile.workExperience">
+                <option ng-selected="checkWorkExperienceSelected(workExperience)" ng-repeat="workExperience in workExperienceOptions track by $index"
+                        value="{{workExperience}}">{{workExperience}}</option>
+            </select>
+        </div>
+
+        <button class="btn btn-default" ng-click="savePosting()">Finish</button>
+    </form>
+    </div>
+</div>

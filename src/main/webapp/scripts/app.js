@@ -78,6 +78,11 @@ app.config(function($routeProvider, $httpProvider) {
           controller : 'ProfileController',
           withLogin : true
        })
+       .when('/posting', {
+          templateUrl : 'scripts/posting/posting.html',
+          controller : 'PostingController',
+          withLogin : false
+       })
        .otherwise({
           redirectTo:'/'
        });

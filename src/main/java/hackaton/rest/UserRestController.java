@@ -5,8 +5,10 @@ import hackaton.dto.UserDTO;
 import hackaton.entity.Profile;
 import hackaton.entity.Role;
 import hackaton.entity.User;
+import hackaton.entity.UserToProfile;
 import hackaton.repository.ProfileRepository;
 import hackaton.repository.UserRepository;
+import hackaton.repository.UserToProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,6 +30,8 @@ public class UserRestController {
     private UserRepository userRepository;
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
+    private UserToProfileRepository userToProfileRepository;
 
     @RequestMapping(value = "/user",
         method = RequestMethod.GET,
@@ -82,12 +86,18 @@ public class UserRestController {
         produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity saveProfile(@RequestBody ProfileDTO profileDTO, Principal principal){
 
+        Profile userProfile = null;
         User loggedUser = userRepository.findByEmail(principal.getName() );
-        Profile userProfile = profileRepository.findByUser(loggedUser);
-        if(userProfile == null){
-            userProfile =  new Profile();
-            userProfile.setUser(loggedUser);
+        UserToProfile userToProfile = userToProfileRepository.findByUser(loggedUser);
+
+        if(userToProfile == null){
+            userToProfile = new UserToProfile();
+            userToProfile.setUser(loggedUser );
+            userToProfile.setProfile(new Profile() );
         }
+
+
+        userProfile = userToProfile.getProfile();
 
         userProfile.setAnalitical(profileDTO.isAnalitical() );
         userProfile.setCreative(profileDTO.isCreative() );
@@ -96,7 +106,7 @@ public class UserRestController {
         userProfile.setTeamwork(profileDTO.isTeamwork() );
         userProfile.setWorkExperience(profileDTO.getWorkExperience() );
 
-        profileRepository.save(userProfile);
+        userToProfileRepository.save(userToProfile );
 
         return new ResponseEntity(HttpStatus.OK);
 
@@ -109,11 +119,13 @@ public class UserRestController {
     public ResponseEntity<ProfileDTO> getProfile(Principal principal){
 
         User loggedUser = userRepository.findByEmail(principal.getName() );
-        Profile userProfile = profileRepository.findByUser(loggedUser);
+        UserToProfile userToProfile = userToProfileRepository.findByUser(loggedUser);
 
-        if(userProfile == null){
+        if(userToProfile == null){
             return new ResponseEntity( HttpStatus.BAD_REQUEST);
         }
+
+        Profile userProfile = userToProfile.getProfile();
 
         ProfileDTO profileDTO = new ProfileDTO();
         profileDTO.setAnalitical(userProfile.isAnalitical() );
@@ -125,6 +137,7 @@ public class UserRestController {
 
 
         return new ResponseEntity(profileDTO, HttpStatus.OK);
+
 
     }
 }

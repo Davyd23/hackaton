@@ -32,6 +32,9 @@ public class User implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Role> roles;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Posting> postings;
+
     public long getId() {
         return id;
     }
@@ -86,5 +89,13 @@ public class User implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Posting> getPostings() {
+        return postings;
+    }
+
+    public void setPostings(Set<Posting> postings) {
+        this.postings = postings;
     }
 }
