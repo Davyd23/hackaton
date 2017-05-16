@@ -1,4 +1,4 @@
-var app = angular.module("hackatonApp",["ngRoute", "ngCookies"]);
+var app = angular.module("hackatonApp",["ngRoute", "ngCookies", "ui.bootstrap"]);
 
 // register the interceptor as a service
 app.factory('myHttpInterceptor', function($q, $location) {

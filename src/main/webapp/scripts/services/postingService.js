@@ -13,6 +13,13 @@ app.service('PostingService', function($http){
             }, function(err){
                 return err;
             })
+        },
+        delete : function(posting){
+            return $http.post('/posting/delete', posting).then(function(response){
+                return response;
+            }, function(err){
+                return err;
+            })
         }
     }
 })

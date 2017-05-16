@@ -1,6 +1,7 @@
 <div class="container">
-    <button class="btn btn-default" ng-click="openPosting('new')" >Create new</button>
-    <button class="btn btn-default" ng-click="openPosting('edit')" ng-disabled="checkOnlyOnePostingSelected()">Edit posting</button>
+    <button class="btn btn-default" ng-click="openPosting('new')" >New</button>
+    <button class="btn btn-default" ng-click="openPosting('edit')" ng-disabled="checkOnlyOnePostingSelected()">Edit </button>
+    <button class="btn btn-default" ng-click="delete()" ng-disabled="checkOneOrMoreSelected()">Delete</button>
     <table class="table table-bordered">
         <thead>
             <tr>

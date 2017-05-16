@@ -8,6 +8,7 @@ import hackaton.entity.Profile;
 import hackaton.entity.User;
 import hackaton.repository.PostingRepository;
 import hackaton.repository.PostingToProfileRepository;
+import hackaton.repository.ProfileRepository;
 import hackaton.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,10 @@ public class PostingRestController {
     private PostingToProfileRepository postingToProfileRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PostingRepository postingRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
 
     @RequestMapping(method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -78,6 +83,31 @@ public class PostingRestController {
         }
 
         return postingDTOList;
+    }
+
+    @RequestMapping(value = "/delete",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity delete(@RequestBody List<PostingDTO> postingDTOs, Principal principal){
+        User loggedUser = userRepository.findByEmail(principal.getName());
+
+        for(PostingDTO postingDTO : postingDTOs) {
+            PostingToProfile postingToProfile = postingToProfileRepository.findByPostingUUID(postingDTO.getUuid());
+            if (postingToProfile.equals(null)) {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+
+            Posting posting = postingToProfile.getPosting();
+            Profile profile = postingToProfile.getProfile();
+
+            if (posting.getUser().equals(loggedUser)) {
+                postingToProfileRepository.delete(postingToProfile);
+                postingRepository.delete(posting);
+                profileRepository.delete(profile);
+            }
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

@@ -1,4 +1,4 @@
-app.controller('MainController', function($scope, $http){
+app.controller('MainController', function($scope){
     $scope.name = "In Main Controller";
 
   /*  $http.get('user').then(function(response){
