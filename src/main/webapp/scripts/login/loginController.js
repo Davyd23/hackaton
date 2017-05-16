@@ -13,9 +13,9 @@ app.controller('LoginController', function($scope, Principal, $location){
                 Principal.checkCredentials().then(function(response){
                     $location.url("/");
                 });
+            }else{
+                $scope.error = true;
             }
-
-            $scope.error = true;
         });
     }
 });

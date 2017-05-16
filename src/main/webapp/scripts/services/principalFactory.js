@@ -1,4 +1,4 @@
-app.factory('Principal', function( $http){
+app.factory('Principal', function( $http, $rootScope){
 
     var principal = {};
 
@@ -23,6 +23,7 @@ app.factory('Principal', function( $http){
             return $http.get('user').then(function(response){
                 if(response.data !== '' ){ // user-ul e logat
                     principal = response.data.principal;
+                    $rootScope.$broadcast("principalSet");
                 }
                 return response;
             });

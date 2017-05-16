@@ -4,8 +4,9 @@
     </div>
     <ul class="nav navbar-nav">
         <!--<li class="active"><a href="#">Home</a></li>-->
-        <li><a href="#!/login">Login</a></li>
-        <li><a href="#!/register">Register</a></li>
+        <li><a href="#!/login" ng-if="!logged">Login</a></li>
+        <li><a href="#!/register" ng-if="!logged">Register</a></li>
+        <li><a href="#!/posting" ng-if="hasRole('recruiter')">Postings</a></li>
         <!--<li><a href="#">Page 3</a></li>-->
     </ul>
 </div>
