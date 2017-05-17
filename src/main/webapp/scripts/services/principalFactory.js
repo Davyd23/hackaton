@@ -20,9 +20,9 @@ app.factory('Principal', function( $http, $rootScope){
             });
         },
         checkCredentials : function() {
-            return $http.get('user').then(function(response){
-                if(response.data !== '' ){ // user-ul e logat
-                    principal = response.data.principal;
+            return $http.get('/user/data').then(function(response){
+                if(response.data!== undefined && response.data !== '' ){ // user-ul e logat
+                    principal = response.data;
                     $rootScope.$broadcast("login");
                 }
                 return response;
@@ -36,13 +36,13 @@ app.factory('Principal', function( $http, $rootScope){
             $rootScope.$broadcast("logout");
         },
         isLogged : function(){
-            if(principal && principal.username !== null && principal.username!== undefined){
+            if(principal && principal.email !== null && principal.email!== undefined){
                 return true;
             }
             return false;
         },
         getAuthorities : function(){
-            if(principal.authorities !== null && principal.authorities!== undefined){
+            if(principal && principal.authorities !== null && principal.authorities!== undefined){
                 return principal.authorities;
             }
             return null;

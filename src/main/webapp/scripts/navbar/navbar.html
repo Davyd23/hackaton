@@ -7,7 +7,7 @@
             <li ng-if="!logged"><a href="#!/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             <li ng-if="!logged"><a href="#!/register"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
             <li class="dropdown" ng-if="logged">
-                <a class="dropdown-toggle" data-toggle="dropdown">{{name}}<span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown">{{principal.prenume}} {{principal.nume}}<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="#!/profile" ng-if="hasRole('candidate')">Profile</a></li>
                     <li><a href="#!/posting" ng-if="hasRole('recruiter')">Postings</a></li>

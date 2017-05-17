@@ -33,11 +33,18 @@ public class UserRestController {
     @Autowired
     private UserToProfileRepository userToProfileRepository;
 
-    @RequestMapping(value = "/user",
+    @RequestMapping(value = "/user/data",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public Principal user(Principal user) {
-       return user;
+    public UserDTO user(Principal user) {
+        if(user == null){
+            return null;
+        }
+
+        User loggedUser = userRepository.findByEmail(user.getName());
+        UserDTO userDTO = new UserDTO(loggedUser);
+
+       return userDTO;
     }
 
     @RequestMapping(value = "/user/register",

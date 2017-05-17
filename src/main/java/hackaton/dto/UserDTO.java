@@ -1,14 +1,33 @@
 package hackaton.dto;
 
 
+import hackaton.entity.Role;
+import hackaton.entity.User;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDTO {
 
     private String nume, prenume, email, password, rePassword;
     private boolean candidate, recruiter;
+    private List<RoleDTO> authorities;
 
     public UserDTO(){
+
+    }
+
+    public UserDTO(User user) {
+        this.nume = user.getNume();
+        this.prenume = user.getPrenume();
+        this.email = user.getEmail();
+        this.password = null;
+        this.rePassword = null;
+        authorities = new ArrayList<RoleDTO>();
+
+        for(Role role : user.getRoles()){
+            authorities.add(new RoleDTO(role));
+        }
 
     }
 
@@ -66,5 +85,20 @@ public class UserDTO {
 
     public void setRecruiter(boolean recruiter) {
         this.recruiter = recruiter;
+    }
+
+    public List<RoleDTO> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<RoleDTO> authorities) {
+        this.authorities = authorities;
+    }
+
+    public void addAuthority(RoleDTO authority){
+        if(authorities == null){
+            authorities = new ArrayList<RoleDTO>();
+        }
+        authorities.add(authority);
     }
 }
