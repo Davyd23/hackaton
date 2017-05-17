@@ -83,6 +83,11 @@ app.config(function($routeProvider, $httpProvider) {
           controller : 'PostingController',
           withLogin : false
        })
+       .when('/logout', {
+          templateUrl : 'scripts/logout/logout.html',
+          controller : 'LogoutController',
+          withLogin : false
+       })
        .otherwise({
           redirectTo:'/'
        });

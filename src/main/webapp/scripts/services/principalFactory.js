@@ -23,7 +23,7 @@ app.factory('Principal', function( $http, $rootScope){
             return $http.get('user').then(function(response){
                 if(response.data !== '' ){ // user-ul e logat
                     principal = response.data.principal;
-                    $rootScope.$broadcast("principalSet");
+                    $rootScope.$broadcast("login");
                 }
                 return response;
             });
@@ -33,6 +33,7 @@ app.factory('Principal', function( $http, $rootScope){
 
             });
             principal = {};
+            $rootScope.$broadcast("logout");
         },
         isLogged : function(){
             if(principal && principal.username !== null && principal.username!== undefined){

@@ -3,9 +3,14 @@ app.controller('NavbarController', function($scope, Principal){
     $scope.roles = [];
     $scope.logged = false;
 
-    $scope.$on("principalSet", function(event, args){
+    $scope.$on("login", function(event, args){
         $scope.roles = Principal.getAuthorities();
         $scope.logged = true;
+    });
+
+    $scope.$on("logout", function(event, args){
+        $scope.roles = [];
+        $scope.logged = false;
     });
 
     $scope.hasRole = function(role ){
