@@ -2,14 +2,8 @@ package hackaton.rest;
 
 import hackaton.dto.PostingDTO;
 import hackaton.dto.ProfileDTO;
-import hackaton.entity.Posting;
-import hackaton.entity.PostingToProfile;
-import hackaton.entity.Profile;
-import hackaton.entity.User;
-import hackaton.repository.PostingRepository;
-import hackaton.repository.PostingToProfileRepository;
-import hackaton.repository.ProfileRepository;
-import hackaton.repository.UserRepository;
+import hackaton.entity.*;
+import hackaton.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +23,8 @@ public class PostingRestController {
 
     @Autowired
     private PostingToProfileRepository postingToProfileRepository;
+    @Autowired
+    private UserToProfileRepository userToProfileRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -110,4 +106,22 @@ public class PostingRestController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/matching",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PostingDTO> getAllMatches(Principal principal){
+        UserToProfile userToProfile = userToProfileRepository.findByEmail(principal.getName() );
+        Profile currentUserProfile = userToProfile.getProfile();
+
+        List<Posting> postingList = postingToProfileRepository.findAllPostingsForProfile(currentUserProfile.isCreative(),
+                currentUserProfile.isOvertimeWork(), currentUserProfile.isAnalitical(), currentUserProfile.isMultitasking(),
+                currentUserProfile.isTeamwork(), currentUserProfile.getWorkExperience() );
+        List<PostingDTO> postingDTOList = new ArrayList<PostingDTO>();
+        for(Posting posting : postingList){
+            postingDTOList.add(new PostingDTO(new ProfileDTO(currentUserProfile),
+                    posting.getTitle(), posting.getDescription(), posting.getCompanyName(), posting.getUuid()));
+        }
+
+        return postingDTOList;
+    }
 }

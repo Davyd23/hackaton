@@ -10,6 +10,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown">{{principal.prenume}} {{principal.nume}}<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="#!/profile" ng-if="hasRole('candidate')">Profile</a></li>
+                    <li><a href="#!/mathes" ng-if="hasRole('candidate')">Matches</a></li>
                     <li><a href="#!/posting" ng-if="hasRole('recruiter')">Postings</a></li>
                 </ul>
             </li>

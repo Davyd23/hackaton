@@ -28,6 +28,9 @@ public class Profile {
     @Column(name = "work_experience")
     private String workExperience;
 
+    public Profile() {
+
+    }
 
     public long getId() {
         return id;
@@ -84,5 +87,4 @@ public class Profile {
     public void setWorkExperience(String workExperience) {
         this.workExperience = workExperience;
     }
-
 }

@@ -81,12 +81,17 @@ app.config(function($routeProvider, $httpProvider) {
        .when('/posting', {
           templateUrl : 'scripts/posting/posting.html',
           controller : 'PostingController',
-          withLogin : false
+          withLogin : true
        })
        .when('/logout', {
           templateUrl : 'scripts/logout/logout.html',
           controller : 'LogoutController',
           withLogin : false
+       })
+       .when('/mathes', {
+          templateUrl : 'scripts/matches/jobMatching.html',
+          controller : 'JobMatchingController',
+          withLogin : true
        })
        .otherwise({
           redirectTo:'/'

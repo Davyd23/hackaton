@@ -20,6 +20,13 @@ app.service('PostingService', function($http){
             }, function(err){
                 return err;
             })
+        },
+        getProfileMatches : function(){
+            return $http.get('/posting/matching').then(function(response){
+                return response;
+            }, function(err){
+                return err;
+            })
         }
     }
 })

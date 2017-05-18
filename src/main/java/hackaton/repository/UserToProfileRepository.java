@@ -10,4 +10,7 @@ public interface UserToProfileRepository extends JpaRepository<UserToProfile, Lo
 
     @Query("Select data from UserToProfile data where data.user = :user")
     public UserToProfile findByUser(@Param("user")User user);
+
+    @Query("Select data from UserToProfile data where data.user.email = :email")
+    public UserToProfile findByEmail(@Param("email")String email);
 }

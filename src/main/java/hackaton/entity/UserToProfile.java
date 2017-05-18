@@ -14,7 +14,7 @@ public class UserToProfile {
     @JoinColumn(name="fk_user", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="fk_profile", referencedColumnName = "id", nullable = false)
     private Profile profile;
 
