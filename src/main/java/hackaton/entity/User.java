@@ -29,6 +29,12 @@ public class User implements Serializable {
     @Column(name = "nume")
     private String nume;
 
+    @Column(name = "activation_key")
+    private String activationKey;
+
+    @Column(name = "reset_key")
+    private String resetKey;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Role> roles;
 
@@ -97,5 +103,21 @@ public class User implements Serializable {
 
     public void setPostings(Set<Posting> postings) {
         this.postings = postings;
+    }
+
+    public String getActivationKey() {
+        return activationKey;
+    }
+
+    public void setActivationKey(String activationKey) {
+        this.activationKey = activationKey;
+    }
+
+    public String getResetKey() {
+        return resetKey;
+    }
+
+    public void setResetKey(String resetKey) {
+        this.resetKey = resetKey;
     }
 }

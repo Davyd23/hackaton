@@ -9,6 +9,7 @@ import hackaton.entity.UserToProfile;
 import hackaton.repository.ProfileRepository;
 import hackaton.repository.UserRepository;
 import hackaton.repository.UserToProfileRepository;
+import hackaton.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,9 +18,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 
 @RestController
@@ -32,6 +35,8 @@ public class UserRestController {
     private ProfileRepository profileRepository;
     @Autowired
     private UserToProfileRepository userToProfileRepository;
+    @Autowired
+    MailService mailService;
 
     @RequestMapping(value = "/user/data",
         method = RequestMethod.GET,
@@ -51,7 +56,7 @@ public class UserRestController {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity register(@RequestBody UserDTO userDTO){
+    public ResponseEntity register(@RequestBody UserDTO userDTO, HttpServletRequest httpServletRequest){
         ResponseEntity responseEntity = new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         if(!userDTO.getPassword().equals(userDTO.getRePassword() ) ){
@@ -63,7 +68,11 @@ public class UserRestController {
         registeringUser.setPassword(passwordEncoder.encode(userDTO.getPassword() ) );
         registeringUser.setNume(userDTO.getNume());
         registeringUser.setPrenume(userDTO.getPrenume());
-        registeringUser.setEnabled(true);//momentan defaul pana se implementeaza serverul de SMTP
+        registeringUser.setEnabled(false);//momentan defaul pana se implementeaza serverul de SMTP
+
+        registeringUser.setActivationKey(UUID.randomUUID().toString());
+        registeringUser.setResetKey(UUID.randomUUID().toString());
+
 
         Set<Role> userRoles = new HashSet<Role>();
         if(userDTO.isCandidate() ){
@@ -84,6 +93,8 @@ public class UserRestController {
             return responseEntity;
         }
 
+        String baseUrl = httpServletRequest.getRequestURL().toString().replace(httpServletRequest.getRequestURI(), "");
+        mailService.send(registeringUser, baseUrl);
         responseEntity = new ResponseEntity(HttpStatus.OK);
         return responseEntity;
     }
