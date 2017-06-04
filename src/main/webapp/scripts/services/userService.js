@@ -7,6 +7,13 @@ app.service('UserService', function($http){
                 return err;
             })
         },
+        activate : function(activationCode){
+            return $http.get('/user/activate/' + activationCode).then(function(response){
+                return response;
+            }, function(err){
+                return err;
+            })
+        },
         saveProfile : function(profile){
             return $http.post('/user/profile', profile).then(function(response){
                 return response;

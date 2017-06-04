@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     @Query("Select data from User data where data.email = :email")
     public User findByEmail(@Param("email")String email);
+
+    @Query("Select data from User data where data.activationKey = :activationKey")
+    public User findByActivationKey(@Param("activationKey") String activationKey);
 }

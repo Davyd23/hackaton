@@ -75,9 +75,9 @@ public class UserRestController {
 
 
         Set<Role> userRoles = new HashSet<Role>();
-        if(userDTO.isCandidate() ){
-            userRoles.add(new Role(registeringUser, "candidate"));
-        }
+
+        userRoles.add(new Role(registeringUser, "candidate"));
+
         if(userDTO.isRecruiter() ){
             userRoles.add(new Role(registeringUser, "recruiter") );
         }
@@ -157,5 +157,21 @@ public class UserRestController {
         return new ResponseEntity(profileDTO, HttpStatus.OK);
 
 
+    }
+
+    @RequestMapping(value = "/user/activate/{activation_key}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity activate(@PathVariable("activation_key") String activationKey){
+        User user = userRepository.findByActivationKey(activationKey);
+
+        if(user == null){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        user.setEnabled(true);
+        userRepository.save(user);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

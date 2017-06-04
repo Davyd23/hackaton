@@ -93,6 +93,11 @@ app.config(function($routeProvider, $httpProvider) {
           controller : 'JobMatchingController',
           withLogin : true
        })
+       .when('/activate/:code', {
+          templateUrl : 'scripts/activate/activation.html',
+          controller : 'ActivationController',
+          withLogin : false
+       })
        .otherwise({
           redirectTo:'/'
        });
