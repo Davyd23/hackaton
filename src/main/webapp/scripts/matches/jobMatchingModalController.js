@@ -1,4 +1,4 @@
-app.controller('JobMatchingModalController',['$scope', 'job', '$uibModalInstance', 'PostingService', function($scope, job, $uibModalInstance, PostingService){
+app.controller('JobMatchingModalController',['$scope', 'job', 'postingIndex', '$uibModalInstance', 'PostingService', function($scope, job, postingIndex, $uibModalInstance, PostingService){
     $scope.job = job;
     console.log(job);
 
@@ -9,7 +9,7 @@ app.controller('JobMatchingModalController',['$scope', 'job', '$uibModalInstance
     $scope.apply = function(){
         PostingService.apply(job).then(function(response){
            if(response.status === 200){
-               $uibModalInstance.close();
+               $uibModalInstance.close(postingIndex);
            }
         });
     };

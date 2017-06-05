@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row" ng-repeat="i in range(totalRowsNumber) track by $index">
-        <div class="col-sm-4 well text-center" ng-repeat="rowElement in range(rowElements($index)) track by $index" >
+        <div class="col-sm-4 well text-center" ng-repeat="rowElement in range(rowElements($index)) track by $index"
+             ng-class="{'b-1-p-green': postings[getPostingId($parent.$index, $index)].applied}">
             <span class="col-sm-12" ng-bind="postings[getPostingId($parent.$index, $index)].title" ng-click="openJob(getPostingId($parent.$index, $index))" ></span>
         </div>
     </div>

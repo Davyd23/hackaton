@@ -6,6 +6,6 @@
     {{job.description}}
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success" ng-click="apply()">Apply</button>
+    <button class="btn btn-success" ng-click="apply()" ng-disabled="job.applied">Apply</button>
     <button class="btn btn-default" ng-click="close()">Close</button>
 </div>

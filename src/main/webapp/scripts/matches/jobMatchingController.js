@@ -31,12 +31,17 @@ app.controller('JobMatchingController', ['$scope', 'PostingService', '$uibModal'
             resolve: {
                 job: function () {
                     return $scope.postings[jobIndex];
+                },
+                postingIndex: function() {
+                    return jobIndex;
                 }
             }
         });
 
-        modalInstance.result.then(function(result){
-           console.log(result);
+        modalInstance.result.then(function(postingIndex){ //on close result
+            $scope.postings[postingIndex].applied = true;
+        }, function(response){ // on dismiss result
+
         });
     };
 }]);

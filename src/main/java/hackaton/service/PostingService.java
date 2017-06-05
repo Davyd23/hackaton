@@ -6,6 +6,7 @@ import hackaton.entity.*;
 import hackaton.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -81,7 +82,13 @@ public class PostingService {
             Posting posting = postingToProfile.getPosting();
             Profile profile = postingToProfile.getProfile();
 
+            List<CandidateToPosting> candidatesToPosting = candidateToPostingRepository.findAllForPosting(posting);
+
             if (posting.getUser().equals(loggedUser)) {
+//                int deleteRows = candidateToPostingRepository.deleteAllForPosting(posting);
+                if(candidatesToPosting != null) {
+                    candidateToPostingRepository.delete(candidatesToPosting);
+                }
                 postingToProfileRepository.delete(postingToProfile);
                 postingRepository.delete(posting);
                 profileRepository.delete(profile);
@@ -96,14 +103,23 @@ public class PostingService {
         UserToProfile userToProfile = userToProfileRepository.findByEmail(principal.getName() );
         Profile currentUserProfile = userToProfile.getProfile();
 
+        List<Posting> postings = candidateToPostingRepository.getAllAppliedToPostingsByUser(userToProfile.getUser() );
+
         List<Posting> postingList = postingToProfileRepository.findAllPostingsForProfile(currentUserProfile.isCreative(),
                 currentUserProfile.isOvertimeWork(), currentUserProfile.isAnalitical(), currentUserProfile.isMultitasking(),
                 currentUserProfile.isTeamwork(), currentUserProfile.getWorkExperience() );
         List<PostingDTO> postingDTOList = new ArrayList<PostingDTO>();
         for(Posting posting : postingList){
-            postingDTOList.add(new PostingDTO(new ProfileDTO(currentUserProfile),
-                    posting.getTitle(), posting.getDescription(), posting.getCompanyName(), posting.getUuid()));
+            PostingDTO postingDTO = new PostingDTO(new ProfileDTO(currentUserProfile),
+                    posting.getTitle(), posting.getDescription(), posting.getCompanyName(), posting.getUuid());
+            if(postings.contains(posting) ){
+                postingDTO.setApplied(true);
+            }
+
+            postingDTOList.add(postingDTO);
         }
+
+
 
         return postingDTOList;
     }

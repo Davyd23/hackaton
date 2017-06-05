@@ -4,10 +4,8 @@ package hackaton.dto;
 public class PostingDTO {
     private ProfileDTO profile;
     private String title, description, companyName, uuid;
+    private boolean applied ;
 
-    public ProfileDTO getProfile() {
-        return profile;
-    }
 
     public PostingDTO() {
     }
@@ -18,6 +16,10 @@ public class PostingDTO {
         this.description = description;
         this.companyName = companyName;
         this.uuid = uuid;
+    }
+
+    public ProfileDTO getProfile() {
+        return profile;
     }
 
     public void setProfile(ProfileDTO profile) {
@@ -54,5 +56,13 @@ public class PostingDTO {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public boolean isApplied() {
+        return applied;
+    }
+
+    public void setApplied(boolean applied) {
+        this.applied = applied;
     }
 }

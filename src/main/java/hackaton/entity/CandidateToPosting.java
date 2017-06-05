@@ -9,11 +9,11 @@ public class CandidateToPosting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     @JoinColumn(name="fk_user", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     @JoinColumn(name="fk_posting", referencedColumnName = "id", nullable = false)
     private Posting posting;
 

@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,6 +41,9 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Posting> postings;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CandidateToPosting> candidateToPostingList;
 
     public long getId() {
         return id;
@@ -119,5 +123,13 @@ public class User implements Serializable {
 
     public void setResetKey(String resetKey) {
         this.resetKey = resetKey;
+    }
+
+    public List<CandidateToPosting> getCandidateToPostingList() {
+        return candidateToPostingList;
+    }
+
+    public void setCandidateToPostingList(List<CandidateToPosting> candidateToPostingList) {
+        this.candidateToPostingList = candidateToPostingList;
     }
 }

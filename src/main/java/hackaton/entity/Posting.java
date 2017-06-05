@@ -1,6 +1,7 @@
 package hackaton.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "posting")
@@ -24,6 +25,9 @@ public class Posting {
 
     @Column(name = "uuid", unique = true, nullable = false)
     private String uuid;
+
+    @OneToMany(mappedBy = "posting", cascade = CascadeType.ALL)
+    private List<CandidateToPosting> candidateToPostingList;
 
     public Posting() {
 
@@ -75,5 +79,13 @@ public class Posting {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public List<CandidateToPosting> getCandidateToPostingList() {
+        return candidateToPostingList;
+    }
+
+    public void setCandidateToPostingList(List<CandidateToPosting> candidateToPostingList) {
+        this.candidateToPostingList = candidateToPostingList;
     }
 }
