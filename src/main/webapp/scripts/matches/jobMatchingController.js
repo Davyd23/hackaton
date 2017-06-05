@@ -1,4 +1,5 @@
-app.controller('JobMatchingController', ['$scope', 'PostingService', function($scope, PostingService){
+app.controller('JobMatchingController', ['$scope', 'PostingService', '$uibModal',
+    function($scope, PostingService, $uibModal){
     $scope.postings = [];
     $scope.totalRowsNumber = 0;
     $scope.elementsPerRow = 3;
@@ -21,4 +22,21 @@ app.controller('JobMatchingController', ['$scope', 'PostingService', function($s
     $scope.range = function(n) {
         return new Array(n);
     };
-}])
+
+    $scope.openJob = function(jobIndex){
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'scripts/matches/jobMatchingModal.html',
+            controller: 'JobMatchingModalController',
+            resolve: {
+                job: function () {
+                    return $scope.postings[jobIndex];
+                }
+            }
+        });
+
+        modalInstance.result.then(function(result){
+           console.log(result);
+        });
+    };
+}]);

@@ -23,6 +23,8 @@ public class PostingService {
     private ProfileRepository profileRepository;
     @Autowired
     private UserToProfileRepository userToProfileRepository;
+    @Autowired
+    private CandidateToPostingRepository candidateToPostingRepository;
 
     public void save(PostingDTO postingDTO, Principal principal){
         PostingToProfile postingToProfile = postingToProfileRepository.findByPostingUUID(postingDTO.getUuid() );
@@ -104,5 +106,17 @@ public class PostingService {
         }
 
         return postingDTOList;
+    }
+
+    public void apply(PostingDTO postingDTO, Principal principal){
+
+        Posting posting = postingRepository.findByUuid(postingDTO.getUuid());
+        User loggedUser = userRepository.findByEmail(principal.getName());
+
+        CandidateToPosting candidateToPosting = new CandidateToPosting();
+        candidateToPosting.setUser(loggedUser);
+        candidateToPosting.setPosting(posting);
+
+        candidateToPostingRepository.save(candidateToPosting);
     }
 }

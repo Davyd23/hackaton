@@ -51,4 +51,12 @@ public class PostingRestController {
     public List<PostingDTO> getAllMatches(Principal principal){
         return postingService.getAllMatches(principal);
     }
+
+    @RequestMapping(value = "/apply",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity apply(@RequestBody PostingDTO postingDTO, Principal principal){
+        postingService.apply(postingDTO, principal);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

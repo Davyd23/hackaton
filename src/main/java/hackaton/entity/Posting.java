@@ -25,6 +25,10 @@ public class Posting {
     @Column(name = "uuid", unique = true, nullable = false)
     private String uuid;
 
+    public Posting() {
+
+    }
+
     public long getId() {
         return id;
     }
