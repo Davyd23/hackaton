@@ -82,10 +82,28 @@ app.controller('PostingController', function($scope, PostingService, $uibModal){
                     $scope.postings.splice(index, 1);
                 }
             }
-        })
+        });
     };
 
+    $scope.viewApplicants = function(){
 
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'scripts/posting/postingApplicant.html',
+            controller: 'PostingApplicantController',
+            resolve: {
+                posting: function () {
+                    return $scope.postings[ $scope.selectedPostings[0] ];
+                }
+            }
+        });
+
+        modalInstance.result.then(function(result){
+            console.log(result);
+        },function(result){
+            console.log(result);
+        });
+    };
 
     $scope.checkWorkExperienceSelected = function(workExperience){
         return $scope.posting.profile.workExperience.indexOf(workExperience) === 0;

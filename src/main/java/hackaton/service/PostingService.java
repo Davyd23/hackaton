@@ -2,6 +2,7 @@ package hackaton.service;
 
 import hackaton.dto.PostingDTO;
 import hackaton.dto.ProfileDTO;
+import hackaton.dto.UserDTO;
 import hackaton.entity.*;
 import hackaton.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,5 +135,16 @@ public class PostingService {
         candidateToPosting.setPosting(posting);
 
         candidateToPostingRepository.save(candidateToPosting);
+    }
+
+    public List<UserDTO> getApplicants(PostingDTO postingDTO){
+        List<CandidateToPosting> candidateToPostingList = candidateToPostingRepository.findAllForPostingUUID(postingDTO.getUuid() );
+        List<UserDTO> userList = new ArrayList<UserDTO>();
+
+        for(CandidateToPosting candidateToPosting : candidateToPostingList){
+            userList.add(new UserDTO(candidateToPosting.getUser() ) );
+        }
+
+        return userList;
     }
 }

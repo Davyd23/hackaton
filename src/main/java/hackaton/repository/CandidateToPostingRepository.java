@@ -21,4 +21,7 @@ public interface CandidateToPostingRepository extends JpaRepository<CandidateToP
     @Modifying
     @Query("Delete from CandidateToPosting data where data.posting=:posting")
     public int deleteAllForPosting(@Param("posting") Posting posting);
+
+    @Query("Select data from CandidateToPosting data where data.posting.uuid = :uuid")
+    public List<CandidateToPosting> findAllForPostingUUID(@Param("uuid") String uuid);
 }

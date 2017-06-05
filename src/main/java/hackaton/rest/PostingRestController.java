@@ -1,6 +1,8 @@
 package hackaton.rest;
 
 import hackaton.dto.PostingDTO;
+import hackaton.dto.UserDTO;
+import hackaton.entity.User;
 import hackaton.service.PostingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,5 +60,13 @@ public class PostingRestController {
     public ResponseEntity apply(@RequestBody PostingDTO postingDTO, Principal principal){
         postingService.apply(postingDTO, principal);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/candidates",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserDTO> getAllApplicants(@RequestBody PostingDTO postingDTO){
+
+        return postingService.getApplicants(postingDTO );
     }
 }

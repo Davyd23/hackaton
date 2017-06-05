@@ -34,6 +34,13 @@ app.service('PostingService', function($http){
             }, function(err){
                 return err;
             })
+        },
+        getApplicants : function(posting){
+            return $http.post('/posting/candidates', posting).then(function(response){
+                return response;
+            }, function(err){
+                return err;
+            })
         }
     }
 })
